@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
 import os
+import sys
 
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
@@ -18,11 +19,17 @@ from sklearn.metrics import (
     recall_score, f1_score, roc_auc_score, fbeta_score
 )
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.append(current_dir)
 # Importar el pipeline de datos limpios
 try:
     from ft_engineering import make_train_test_data
-except ImportError:
-    print("⚠️ Error: No se encuentra 'ft_engineering.py'.")
+    print("✅ Módulo 'ft_engineering' cargado correctamente.")
+except ImportError as e:
+    print(f"❌ ERROR CRÍTICO: No se pudo importar 'make_train_test_data' de 'ft_engineering.py'.")
+    print(f"Detalle del error: {e}")
+    sys.exit(1) # Detiene el programa si no puede cargar los datos
 
 # ==============================================
 # BLOQUE 1: Función de Balanceo (Oversampling 1:1)
