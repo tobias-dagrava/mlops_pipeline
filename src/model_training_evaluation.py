@@ -6,6 +6,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import joblib
+import os
 
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
@@ -171,6 +173,23 @@ def main():
     except Exception as e:
         print("\n⚠️ Nota: No se pudo graficar la importancia de las variables.")
         print("Esto es normal por la transformación logarítmica (FunctionTransformer).")
+
+    # -----------------------------------------------------------------
+    # GUARDAR EL MEJOR MODELO PARA DEPLOY (FastAPI)
+    # -----------------------------------------------------------------
+    import joblib
+    import os
+    
+    print("\n💾 Guardando el mejor modelo (Random Forest) para la API...")
+    
+    # Definimos la raíz del proyecto aquí mismo para evitar errores
+    ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    models_dir = os.path.join(ROOT_DIR, 'models')
+    os.makedirs(models_dir, exist_ok=True) # Crea la carpeta si no existe
+    
+    model_path = os.path.join(models_dir, 'best_model_rf.pkl')
+    joblib.dump(pipe_rf, model_path)
+    print(f"✅ Modelo guardado exitosamente en: {model_path}")
 
     # --- RESUMEN FINAL ---
     print("\n📊 --- TABLA RESUMEN V2.1 ---")
