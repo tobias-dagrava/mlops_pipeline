@@ -1,5 +1,5 @@
 # ==============================================
-# model_training.py - Entrenamiento (V2.1 - Balance 1:1 y F2-Score)
+# model_training.py 
 # ==============================================
 
 import pandas as pd
